@@ -34,7 +34,10 @@ function showNextStep() {
   const div = document.createElement('div');
   div.className = 'step';
   div.innerHTML = `
-    <p><strong>${step.question}</strong></p>
-    <button onclick="toggle('hint-${currentStep}')">Υπόδειξη</button>
-    <div id="hint-${currentStep
+  <p><strong>${step.question}</strong></p>
+  <button onclick="toggle('hint-${currentStep}')">Υπόδειξη</button>
+  <div id="hint-${currentStep}" class="hint">${step.hint}</div>
+  <button onclick="toggle('sol-${currentStep}')">Λύση</button>
+  <div id="sol-${currentStep}" class="solution">${step.solution}</div>
+`;
 
