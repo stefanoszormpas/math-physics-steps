@@ -1,4 +1,4 @@
-const EXERCISE_FILES = ['sample1.json']; // εδώ μπορείς να προσθέσεις κι άλλα
+const EXERCISE_FILES = ['sample1.json', 'sample2.json', 'sample3.json']; // βάλε εδώ όλα τα αρχεία JSON σου
 
 let currentStep = 0;
 let currentExercise = null;
@@ -7,8 +7,6 @@ async function loadExercises(filename = 'sample1.json') {
   const resp = await fetch('exercises/' + filename);
   const data = await resp.json();
 
-  // Προαιρετικά: Αν έχεις string στο JSON με $...$ κάνουμε μετατροπή σε \( ... \)
-  // Αν έχεις ήδη το σωστό format, μπορείς να αφαιρέσεις το μπλοκ αυτό
   function convertDollarToLatex(input) {
     return input.replace(/\$(.+?)\$/g, (_, expr) => `\\(${expr.trim()}\\)`);
   }
@@ -34,7 +32,7 @@ function renderExercise(ex) {
     <button id="reset-step" onclick="resetExercise()">Επαναφορά</button>
   `;
   MathJax.typesetPromise();
-  showNextStep(); // ξεκινάμε με το πρώτο βήμα
+  showNextStep();
 }
 
 function showNextStep() {
@@ -64,9 +62,9 @@ function showNextStep() {
 function resetExercise() {
   currentStep = 0;
   const container = document.getElementById('step-container');
-  container.innerHTML = ''; // καθαρίζουμε όλα τα βήματα
-  document.getElementById('next-step').disabled = false; // ενεργοποιούμε το κουμπί "Επόμενο βήμα"
-  showNextStep(); // ξαναδείχνουμε το πρώτο βήμα
+  container.innerHTML = '';
+  document.getElementById('next-step').disabled = false;
+  showNextStep();
 }
 
 function toggle(id) {
@@ -75,7 +73,21 @@ function toggle(id) {
   el.classList.toggle('show');
 }
 
+function populateExerciseSelect() {
+  const select = document.getElementById('exercise-select');
+  EXERCISE_FILES.forEach(file => {
+    const option = document.createElement('option');
+    option.value = file;
+    option.textContent = file.replace('.json', '').replace(/_/g, ' ');
+    select.appendChild(option);
+  });
+
+  select.addEventListener('change', (e) => {
+    loadExercises(e.target.value);
+  });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
+  populateExerciseSelect();
   loadExercises(EXERCISE_FILES[0]);
 });
-
