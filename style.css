@@ -1,1 +1,71 @@
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  line-height: 1.6;
+  background-color: #fafafa;
+  color: #222;
+}
+
+h2 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-style: italic;
+  margin-bottom: 20px;
+}
+
+.step {
+  border: 1px solid #ddd;
+  background: #fff;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+button {
+  cursor: pointer;
+  background-color: #2980b9;
+  border: none;
+  color: white;
+  padding: 6px 12px;
+  margin: 5px 10px 10px 0;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3498db;
+}
+
+.hint, .solution {
+  margin-top: 10px;
+  padding: 10px;
+  border-left: 4px solid #3498db;
+  background-color: #eaf3fc;
+  display: none; /* Από προεπιλογή κρυμμένα */
+  white-space: pre-wrap;
+}
+
+.hint {
+  border-color: #f39c12;
+  background-color: #fff8e1;
+}
+
+.solution {
+  border-color: #27ae60;
+  background-color: #e8f5e9;
+}
+
+#next-step {
+  background-color: #27ae60;
+  margin-top: 10px;
+}
+
+#next-step:hover {
+  background-color: #2ecc71;
+}
 
