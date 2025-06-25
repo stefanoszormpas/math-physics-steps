@@ -13,7 +13,6 @@ async function loadExercises(filename = 'sample1.json') {
     return input.replace(/\$(.+?)\$/g, (_, expr) => `\\(${expr.trim()}\\)`);
   }
 
-  // Αν θέλεις να κάνεις τη μετατροπή σε όλα τα βήματα:
   for (let step of data.steps) {
     step.question = convertDollarToLatex(step.question);
     step.hint = convertDollarToLatex(step.hint);
@@ -51,9 +50,9 @@ function showNextStep() {
   div.innerHTML = `
     <p><strong>${step.question}</strong></p>
     <button onclick="toggle('hint-${currentStep}')">Υπόδειξη</button>
-    <div id="hint-${currentStep}" class="hint" style="display:none;">${step.hint}</div>
+    <div id="hint-${currentStep}" class="hint">${step.hint}</div>
     <button onclick="toggle('sol-${currentStep}')">Λύση</button>
-    <div id="sol-${currentStep}" class="solution" style="display:none;">${step.solution}</div>
+    <div id="sol-${currentStep}" class="solution">${step.solution}</div>
   `;
   container.appendChild(div);
 
@@ -73,14 +72,10 @@ function resetExercise() {
 function toggle(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  if (el.style.display === 'none') {
-    el.style.display = 'block';
-  } else {
-    el.style.display = 'none';
-  }
+  el.classList.toggle('show');
 }
 
-// Αυτό το κομμάτι ξεκινάει τη φόρτωση της πρώτης άσκησης όταν φορτώνει η σελίδα
 window.addEventListener('DOMContentLoaded', () => {
   loadExercises(EXERCISE_FILES[0]);
 });
+
