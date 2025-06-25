@@ -59,6 +59,32 @@ button {
 button:hover {
   background-color: #003d66;
 }
+/* Στυλ για το label */
+label[for="exercise-select"] {
+  font-weight: 600;
+  color: #004080;
+  margin-right: 10px;
+  font-size: 1.1em;
+}
+
+/* Στυλ για το select dropdown */
+#exercise-select {
+  padding: 6px 10px;
+  font-size: 1em;
+  border: 1.5px solid #0059b3;
+  border-radius: 5px;
+  background-color: #f0f8ff;
+  color: #003366;
+  cursor: pointer;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#exercise-select:hover,
+#exercise-select:focus {
+  border-color: #003d66;
+  box-shadow: 0 0 5px rgba(0, 61, 102, 0.5);
+  outline: none;
+}
 
 /* Responsive για μικρές οθόνες */
 @media (max-width: 600px) {
