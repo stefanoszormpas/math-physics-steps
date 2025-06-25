@@ -36,8 +36,23 @@ function showNextStep() {
   div.innerHTML = `
   <p><strong>${step.question}</strong></p>
   <button onclick="toggle('hint-${currentStep}')">Υπόδειξη</button>
-  <div id="hint-${currentStep}" class="hint">${step.hint}</div>
+  <div id="hint-${currentStep}" class="hint" style="display:none;">${step.hint}</div>
   <button onclick="toggle('sol-${currentStep}')">Λύση</button>
-  <div id="sol-${currentStep}" class="solution">${step.solution}</div>
-`;
+  <div id="sol-${currentStep}" class="solution" style="display:none;">${step.solution}</div>
+  `;
 
+  container.appendChild(div);
+  MathJax.typesetPromise();
+  currentStep++;
+}
+
+function toggle(id) {
+  const el = document.getElementById(id);
+  if (el.style.display === 'block') {
+    el.style.display = 'none';
+  } else {
+    el.style.display = 'block';
+  }
+}
+
+window.onload = () => loadExercises();
