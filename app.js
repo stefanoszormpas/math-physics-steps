@@ -56,3 +56,4 @@ function toggle(id) {
 }
 
 window.onload = () => loadExercises();
+
