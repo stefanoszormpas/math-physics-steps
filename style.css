@@ -1,71 +1,76 @@
+/* Βασικά στυλ σώματος και τίτλων */
 body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
+  margin: 20px;
   line-height: 1.6;
-  background-color: #fafafa;
-  color: #222;
 }
 
-h2 {
-  color: #2c3e50;
-  margin-bottom: 10px;
+h1, h2 {
+  color: #004080;
 }
 
-.description {
-  font-style: italic;
-  margin-bottom: 20px;
-}
-
+/* Κουτιά βημάτων */
 .step {
-  border: 1px solid #ddd;
-  background: #fff;
-  padding: 15px;
+  background: #e6f0ff;
+  border-left: 5px solid #0059b3;
+  padding: 15px 20px;
   margin-bottom: 15px;
   border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+/* Υπόδειξη και λύση με ομαλή απόκρυψη/εμφάνιση */
+.hint, .solution {
+  background: #fff;
+  border: 1px solid #cce0ff;
+  padding: 10px 15px;
+  margin-top: 8px;
+  border-radius: 5px;
+  font-style: italic;
+  color: #004080;
+  
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+}
+
+/* Όταν θέλουμε να εμφανίσουμε την υπόδειξη/λύση */
+.hint.show, .solution.show {
+  max-height: 500px; /* αρκετό για το περιεχόμενο */
+  opacity: 1;
+}
+
+/* Κουμπιά */
 button {
-  cursor: pointer;
-  background-color: #2980b9;
-  border: none;
+  background-color: #0059b3;
   color: white;
-  padding: 6px 12px;
-  margin: 5px 10px 10px 0;
+  border: none;
+  padding: 8px 14px;
   border-radius: 4px;
-  font-size: 14px;
+  margin: 5px 5px 0 0;
+  cursor: pointer;
+  font-weight: 600;
   transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #3498db;
+  background-color: #003d66;
 }
 
-.hint, .solution {
-  margin-top: 10px;
-  padding: 10px;
-  border-left: 4px solid #3498db;
-  background-color: #eaf3fc;
-  display: none; /* Από προεπιλογή κρυμμένα */
-  white-space: pre-wrap;
-}
-
-.hint {
-  border-color: #f39c12;
-  background-color: #fff8e1;
-}
-
-.solution {
-  border-color: #27ae60;
-  background-color: #e8f5e9;
-}
-
-#next-step {
-  background-color: #27ae60;
-  margin-top: 10px;
-}
-
-#next-step:hover {
-  background-color: #2ecc71;
+/* Responsive για μικρές οθόνες */
+@media (max-width: 600px) {
+  body {
+    margin: 10px;
+  }
+  button {
+    width: 100%;
+    margin: 5px 0;
+  }
+  .step {
+    padding: 12px;
+  }
 }
 
