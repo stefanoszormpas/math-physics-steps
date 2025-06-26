@@ -27,10 +27,10 @@ async function loadExercises(filename = 'sample1.json') {
     step.solution = convertDollarToLatex(step.solution);
   }
 
-  data.filename = filename; // ✅ Αποθηκεύουμε το όνομα για χρήση στο save/load
+  data.filename = filename;
   currentExercise = data;
 
-  currentStep = loadProgress(filename); // ✅ Ανάκτηση προηγούμενης προόδου
+  currentStep = loadProgress(filename); // ⬅ φόρτωση προόδου
 
   renderExercise(data);
 }
@@ -40,10 +40,17 @@ function renderExercise(ex) {
   container.innerHTML = `
     <h2>${ex.title}</h2>
     <p class="description">${ex.description}</p>
+    
+    <div id="progress-bar-container">
+      <div id="progress-bar">0%</div>
+    </div>
+
     <div id="step-container"></div>
+    
     <button id="next-step" onclick="showNextStep()">Επόμενο βήμα</button>
     <button id="reset-step" onclick="resetExercise()">Επαναφορά</button>
   `;
+  
   MathJax.typesetPromise();
   showNextStep();
 }
@@ -70,21 +77,31 @@ function showNextStep() {
   MathJax.typesetPromise();
 
   currentStep++;
-
-  // ✅ Αποθήκευση προόδου
-  saveProgress(currentExercise.filename, currentStep);
+  saveProgress(currentExercise.filename, currentStep); // ⬅ αποθήκευση
+  updateProgressBar(); // ⬅ ενημέρωση μπάρας προόδου
 }
 
 function resetExercise() {
   currentStep = 0;
-
-  // ✅ Μηδενισμός αποθηκευμένης προόδου
-  saveProgress(currentExercise.filename, 0);
+  saveProgress(currentExercise.filename, 0); // ⬅ μηδενισμός
 
   const container = document.getElementById('step-container');
   container.innerHTML = '';
   document.getElementById('next-step').disabled = false;
+
+  updateProgressBar(); // ⬅ επαναφορά μπάρας
   showNextStep();
+}
+
+function updateProgressBar() {
+  const totalSteps = currentExercise.steps.length;
+  const percent = Math.floor((currentStep / totalSteps) * 100);
+
+  const bar = document.getElementById('progress-bar');
+  if (bar) {
+    bar.style.width = percent + '%';
+    bar.textContent = percent + '%';
+  }
 }
 
 function toggle(id) {
