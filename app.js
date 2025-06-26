@@ -65,11 +65,14 @@ function showNextStep() {
   const container = document.getElementById('step-container');
   const div = document.createElement('div');
   div.className = 'step';
+
+  const isLastStep = (currentStep === currentExercise.steps.length - 1);
+
   div.innerHTML = `
     <p><strong>${step.question}</strong></p>
     <button onclick="toggle('hint-${currentStep}')">Υπόδειξη</button>
     <div id="hint-${currentStep}" class="hint">${step.hint}</div>
-    <button onclick="toggle('sol-${currentStep}')">Λύση</button>
+    <button onclick="toggle('sol-${currentStep}');${isLastStep ? 'showCompletionMessage();' : ''}">Λύση</button>
     <div id="sol-${currentStep}" class="solution">${step.solution}</div>
   `;
   container.appendChild(div);
@@ -79,10 +82,6 @@ function showNextStep() {
   currentStep++;
   saveProgress(currentExercise.filename, currentStep);
   updateProgressBar();
-
-  if (currentStep >= currentExercise.steps.length) {
-    alert("🎉 Συγχαρητήρια! Ολοκλήρωσες την άσκηση!");
-  }
 }
 
 function resetExercise() {
@@ -106,7 +105,6 @@ function updateProgressBar() {
     bar.style.width = percent + '%';
     bar.textContent = percent + '%';
 
-    // Δυναμική αλλαγή χρώματος
     if (percent < 40) {
       bar.style.backgroundColor = '#f44336'; // κόκκινο
     } else if (percent < 70) {
@@ -121,6 +119,10 @@ function toggle(id) {
   const el = document.getElementById(id);
   if (!el) return;
   el.classList.toggle('show');
+}
+
+function showCompletionMessage() {
+  alert("🎉 Συγχαρητήρια! Ολοκλήρωσες την άσκηση!");
 }
 
 function populateExerciseSelect() {
@@ -141,3 +143,4 @@ window.addEventListener('DOMContentLoaded', () => {
   populateExerciseSelect();
   loadExercises(EXERCISE_FILES[0]);
 });
+
