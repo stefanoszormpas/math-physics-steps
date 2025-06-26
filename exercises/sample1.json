@@ -6,7 +6,6 @@
       "question": "1. Βρες την ταχύτητα του m₁ πριν την κρούση.",
       "image": "images/work_1.png",
       "hint": "Χρησιμοποίησε \\( mgh = \\frac{1}{2}mv^2 \\).",
-      
       "solution": "\\( v = \\sqrt{2gh} \\)"
     },
     {
