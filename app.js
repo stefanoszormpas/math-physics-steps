@@ -1,7 +1,17 @@
-const EXERCISE_FILES = ['sample1.json', 'sample2.json', 'sample3.json']; // βάλε εδώ όλα τα αρχεία JSON σου
+const EXERCISE_FILES = ['sample1.json', 'sample2.json', 'sample3.json'];
 
 let currentStep = 0;
 let currentExercise = null;
+
+// --- Progress Management with Local Storage ---
+function saveProgress(exerciseId, questionIndex) {
+    localStorage.setItem('progress_' + exerciseId, questionIndex);
+}
+
+function loadProgress(exerciseId) {
+    const saved = localStorage.getItem('progress_' + exerciseId);
+    return saved ? parseInt(saved) : 0;
+}
 
 async function loadExercises(filename = 'sample1.json') {
   const resp = await fetch('exercises/' + filename);
@@ -17,8 +27,11 @@ async function loadExercises(filename = 'sample1.json') {
     step.solution = convertDollarToLatex(step.solution);
   }
 
+  data.filename = filename; // ✅ Αποθηκεύουμε το όνομα για χρήση στο save/load
   currentExercise = data;
-  currentStep = 0;
+
+  currentStep = loadProgress(filename); // ✅ Ανάκτηση προηγούμενης προόδου
+
   renderExercise(data);
 }
 
@@ -57,10 +70,17 @@ function showNextStep() {
   MathJax.typesetPromise();
 
   currentStep++;
+
+  // ✅ Αποθήκευση προόδου
+  saveProgress(currentExercise.filename, currentStep);
 }
 
 function resetExercise() {
   currentStep = 0;
+
+  // ✅ Μηδενισμός αποθηκευμένης προόδου
+  saveProgress(currentExercise.filename, 0);
+
   const container = document.getElementById('step-container');
   container.innerHTML = '';
   document.getElementById('next-step').disabled = false;
