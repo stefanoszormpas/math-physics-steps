@@ -5,12 +5,12 @@ let currentExercise = null;
 
 // --- Progress Management with Local Storage ---
 function saveProgress(exerciseId, questionIndex) {
-    localStorage.setItem('progress_' + exerciseId, questionIndex);
+  localStorage.setItem('progress_' + exerciseId, questionIndex);
 }
 
 function loadProgress(exerciseId) {
-    const saved = localStorage.getItem('progress_' + exerciseId);
-    return saved ? parseInt(saved) : 0;
+  const saved = localStorage.getItem('progress_' + exerciseId);
+  return saved ? parseInt(saved) : 0;
 }
 
 async function loadExercises(filename = 'sample1.json') {
@@ -30,7 +30,7 @@ async function loadExercises(filename = 'sample1.json') {
   data.filename = filename;
   currentExercise = data;
 
-  currentStep = loadProgress(filename); // ⬅ φόρτωση προόδου
+  currentStep = loadProgress(filename);
 
   renderExercise(data);
 }
@@ -40,17 +40,17 @@ function renderExercise(ex) {
   container.innerHTML = `
     <h2>${ex.title}</h2>
     <p class="description">${ex.description}</p>
-    
+
     <div id="progress-bar-container">
       <div id="progress-bar">0%</div>
     </div>
 
     <div id="step-container"></div>
-    
+
     <button id="next-step" onclick="showNextStep()">Επόμενο βήμα</button>
     <button id="reset-step" onclick="resetExercise()">Επαναφορά</button>
   `;
-  
+
   MathJax.typesetPromise();
   showNextStep();
 }
@@ -77,19 +77,23 @@ function showNextStep() {
   MathJax.typesetPromise();
 
   currentStep++;
-  saveProgress(currentExercise.filename, currentStep); // ⬅ αποθήκευση
-  updateProgressBar(); // ⬅ ενημέρωση μπάρας προόδου
+  saveProgress(currentExercise.filename, currentStep);
+  updateProgressBar();
+
+  if (currentStep >= currentExercise.steps.length) {
+    alert("🎉 Συγχαρητήρια! Ολοκλήρωσες την άσκηση!");
+  }
 }
 
 function resetExercise() {
   currentStep = 0;
-  saveProgress(currentExercise.filename, 0); // ⬅ μηδενισμός
+  saveProgress(currentExercise.filename, 0);
 
   const container = document.getElementById('step-container');
   container.innerHTML = '';
   document.getElementById('next-step').disabled = false;
 
-  updateProgressBar(); // ⬅ επαναφορά μπάρας
+  updateProgressBar();
   showNextStep();
 }
 
@@ -101,6 +105,15 @@ function updateProgressBar() {
   if (bar) {
     bar.style.width = percent + '%';
     bar.textContent = percent + '%';
+
+    // Δυναμική αλλαγή χρώματος
+    if (percent < 40) {
+      bar.style.backgroundColor = '#f44336'; // κόκκινο
+    } else if (percent < 70) {
+      bar.style.backgroundColor = '#ff9800'; // πορτοκαλί
+    } else {
+      bar.style.backgroundColor = '#4caf50'; // πράσινο
+    }
   }
 }
 
