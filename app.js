@@ -70,11 +70,13 @@ function showNextStep() {
 
   div.innerHTML = `
     <p><strong>${step.question}</strong></p>
+    ${step.image ? `<img src="${step.image}" alt="Σχήμα Άσκησης" style="max-width:100%; margin: 10px 0;">` : ''}
     <button onclick="toggle('hint-${currentStep}')">Υπόδειξη</button>
     <div id="hint-${currentStep}" class="hint">${step.hint}</div>
     <button onclick="toggle('sol-${currentStep}');${isLastStep ? 'showCompletionMessage();' : ''}">Λύση</button>
     <div id="sol-${currentStep}" class="solution">${step.solution}</div>
   `;
+
   container.appendChild(div);
 
   MathJax.typesetPromise();
